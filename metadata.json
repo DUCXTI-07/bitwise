@@ -1,0 +1,5 @@
+{
+  "name": "BiteWise",
+  "description": "A Gen Z-inspired food calorie tracker with an AI chatbot for personalized nutrition advice.",
+  "requestFramePermissions": ["camera"]
+}

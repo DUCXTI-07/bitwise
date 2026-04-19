@@ -1,0 +1,66 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user-specific settings and profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique identifier for the user" },
+        "email": { "type": "string", "format": "email", "description": "User's email address" },
+        "displayName": { "type": "string", "description": "User's display name" },
+        "dailyCalorieGoal": { "type": "integer", "description": "User's daily calorie target" },
+        "height": { "type": "number", "description": "User's height in cm" },
+        "weight": { "type": "number", "description": "User's weight in kg" },
+        "age": { "type": "integer", "description": "User's age" },
+        "phoneNumber": { "type": "string", "description": "User's phone number for notifications" },
+        "notifiedToday": { "type": "boolean", "description": "Whether the user was notified about exceeding limit today" },
+        "lastNotificationDate": { "type": "string", "description": "The date (YYYY-MM-DD) the user was last notified" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the profile was created" }
+      },
+      "required": ["uid", "email", "dailyCalorieGoal"]
+    },
+    "MealLog": {
+      "title": "Meal Log",
+      "description": "Records individual food items consumed by the user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the user who logged the meal" },
+        "foodName": { "type": "string", "description": "Name of the food item" },
+        "calories": { "type": "integer", "description": "Calorie count for the food" },
+        "protein": { "type": "integer", "description": "Protein in grams" },
+        "carbs": { "type": "integer", "description": "Carbohydrates in grams" },
+        "fat": { "type": "integer", "description": "Fat in grams" },
+        "imageUrl": { "type": "string", "description": "URL of the food image" },
+        "mealType": { "type": "string", "enum": ["breakfast", "lunch", "dinner", "snack"], "description": "Type of meal" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "When the meal was logged" }
+      },
+      "required": ["userId", "foodName", "calories", "mealType", "timestamp"]
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "Stores messages from the AI nutrition assistant.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the user in the chat" },
+        "text": { "type": "string", "description": "Message content" },
+        "sender": { "type": "string", "enum": ["user", "ai"], "description": "Who sent the message" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "When the message was sent" }
+      },
+      "required": ["userId", "text", "sender", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile documents"
+    },
+    "/meals/{mealId}": {
+      "schema": "MealLog",
+      "description": "Meal log entries"
+    },
+    "/chats/{chatId}": {
+      "schema": "ChatMessage",
+      "description": "Chat history entries"
+    }
+  }
+}
